@@ -106,6 +106,65 @@ def movie(movieID):
     return render_template('movie.html', movie_info=movie_info[0], actors=actor_info, directors=director_info, genres=genre_info)
     # return render_template('movie.html')
 
+#TODO create update.html --> page with forms to update a movie
+@app.route('/update/<int:movieID>', methods=['GET', 'POST'])
+def update(movieID):
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        poster = request.form['poster']
+        rating = request.form['rating']
+        year = request.form['year']
+
+        # potentially blank forms means individual if checks are needed
+        if title:
+            cursor.execute("UPDATE movie SET movieName = :1 WHERE movieID = :2", [title, movieID])
+        if description:
+            cursor.execute("UPDATE movie SET movieDescription = :1 WHERE movieID = :2", [description, movieID])
+        if poster:
+            cursor.execute("UPDATE movie SET moviePoster = :1 WHERE movieID = :2", [poster, movieID])
+        if rating:
+            cursor.execute("UPDATE movie SET movieRating = :1 WHERE movieID = :2", [rating, movieID])
+        if year:
+            cursor.execute("UPDATE movie SET movieRating = :1 WHERE movieID = :2", [year, movieID])
+        return render_template(f'/movie/{movieID}')
+    else:
+        render_template(f'/update/{movieID}')
+
+#TODO create delete.html --> confirmation page for deletion
+@app.route('/delete/<int:movieID>', methods=['GET', 'POST'])
+def delete(movieID):
+    if request.method == 'POST':
+        # delete from movie_actor
+        cursor.execute("DELETE FROM movie_actor WHERE movieID = :1", [movieID])
+        # delete from movie_director
+        cursor.execute("DELETE FROM movie_director WHERE movieID = :1", [movieID])
+        # delete from movie_genre
+        cursor.execute("DELETE FROM movie_genre WHERE movieID = :1", [movieID])
+        # delete movie
+        cursor.execute("DELETE FROM movie WHERE movieID = :1", [movieID])
+        render_template('/home')
+    else:
+        render_template(f'/delete/{movieID}')
+
+#TODO make add.html
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    if request == 'POST':
+        title = request.form['title']
+        poster = request.form['poster']
+        description = request.form['description']
+        rating = request.form['rating']
+        year = request.form['year']
+        add_query = """
+        INSERT INTO movie (movieName, moviePoster, movieDescription, movieRating, movieYear 
+        VALUES (:1, :2. :3, :4, :5)
+        """
+        cursor.execute(add_query, [title, poster, description, rating, year])
+        render_template('/home')
+    else:
+        render_template('/add')
+
 
 
 

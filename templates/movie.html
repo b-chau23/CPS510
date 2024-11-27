@@ -79,10 +79,10 @@
                 </div>
                 <div class="release" style="display: flex; gap: 10px">
                   {% if session['admin'] %}
-                  <form method="POST" action="/update/{{ movie_info[0] }}">
+                  <form method="GET" action="/update/{{ movie_info[0] }}">
                     <button>Update</button>
                   </form>
-                  <form method="POST" action="/delete/{{ movie_info[0] }}">
+                  <form method="GET" action="/delete/{{ movie_info[0] }}">
                     <button>Delete</button>
                   </form>
                   {% endif %}
