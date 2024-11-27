@@ -69,15 +69,20 @@
 
 
 <div class="flex-container">
-    {% for movie in movie_db_list %}
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mt-3" style="background-image: url('{{ movie[2] }}'); background-size: cover; background-position: center;">
-        <a href="{{ url_for('movie', id=movie[0]) }}" class="text-decoration-none">
-            <div class="movie-card">
-                <!-- You can add movie details like title here if needed -->
-            </div>
-        </a>
-    </div>
-    {% endfor %}
+  {% for movie in movie_db_list %}
+  <div class="col-6 col-sm-4 col-md-3 col-lg-2 mt-3" style="position: relative;">
+      <a href="{{ url_for('movie', movieID=movie[0]) }}" class="text-decoration-none" 
+         style="display: block; height: 100%; width: 100%;">
+          <div class="movie-card" style="background-image: url('{{ movie[2] }}'); 
+                                         background-size: cover; 
+                                         background-position: center; 
+                                         height: 100%; 
+                                         width: 100%;">
+              <!-- You can add movie details like title here if needed -->
+          </div>
+      </a>
+  </div>
+  {% endfor %}
 </div>
 
 
