@@ -41,50 +41,57 @@
 <div>
      <div class="container">
         <div class="header">
-            <h1>Deadpool & Wolverine <span>2024</span></h1>
+            <!-- <h1>Deadpool & Wolverine <span>2024</span></h1> -->
+            <h1>{{ movie_info[1] }} <span>{{ movie_info[5] }}</span></h1>
             <div class="tags">
-                <span class="tag">Action</span>
-                <span class="tag">Adventure</span>
-                <span class="tag">Comedy</span>
+              {% for genre in genres %}
+                <span class="tag">{{ genre[0] }}</span>
+              {% endfor %}
             </div>
         </div>
         <div class="content">
             <div class="info">
-                <p>Deadpool is offered a place in the Marvel Cinematic Universe by the Time Variance Authority but instead recruits a variant of Wolverine to save his universe from extinction.</p>
+              <p>{{ movie_info[3] }}</p>
+                <!-- <p>Deadpool is offered a place in the Marvel Cinematic Universe by the Time Variance Authority but instead recruits a variant of Wolverine to save his universe from extinction.</p> -->
                 <div class="details">
 
                     <div class="director">
                         <h3>Director</h3>
+                        {% for director in directors %}
                         <div class="director-info">
-                            <img src="../static/img/default.jpg" alt="Shawn Levy">
-                            <span>Shawn Levy</span>
+                            <img src="../static/img/default.jpg" alt="{{director[0]}} {{director[1]}}">
+                            <span>{{director[0]}} {{director[1]}}</span>
                         </div>
+                        {% endfor %}
                     </div>
                     <div class="artists">
-                        <h3>Artists</h3>
+                        <h3>Actors</h3>
                         <div class="artist-list">
+                            {% for actor in actors %}
                             <div class="artist">
-                                <img src="../static/img/default.jpg" alt="Josh Brolin">
-                                <span>Josh Brolin as Cable</span>
+                              <img src="{{ actor[2] }}" alt="{{ actor[0] }} {{ actor[1] }}">
+                              <span>{{ actor[0] }} {{ actor[1] }}</span>
                             </div>
-                            <div class="artist">
-                                <img src="../static/img/default.jpg" alt="Ryan Reynolds">
-                                <span>Ryan Reynolds as Wade Wilson</span>
-                            </div>
-                            <div class="artist">
-                                <img src="../static/img/default.jpg" alt="Morena Baccarin">
-                                <span>Morena Baccarin as Vanessa</span>
-                            </div>
+                            {% endfor %}
+
                         </div>
                     </div>
                 </div>
-                <div class="release">
-
+                <div class="release" style="display: flex; gap: 10px">
+                  {% if session['admin'] %}
+                  <form method="POST" action="/update/{{ movie_info[0] }}">
+                    <button>Update</button>
+                  </form>
+                  <form method="POST" action="/delete/{{ movie_info[0] }}">
+                    <button>Delete</button>
+                  </form>
+                  {% endif %}
                 </div>
 
             </div>
             <div class="poster">
-                <img src="../static/img/default.jpg" alt="Deadpool & Wolverine Poster">
+                <!-- <img src="../static/img/default.jpg" alt="Deadpool & Wolverine Poster"> -->
+                <img src="{{ movie_info[2] }}" alt="{{ movie_info[1] }} Poster">
 
 
             </div>
